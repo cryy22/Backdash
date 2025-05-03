@@ -14,6 +14,7 @@ sealed class ProtocolOutbox(
 {
     int nextSendSeq;
 
+    // TODO: have to make it possible for the destination of a SendMessage to be a ProductUserId
     public bool SendMessage(in ProtocolMessage msg) => peer.TrySendTo(state.PeerAddress.Address, in msg, this);
 
     public void BeforeSendMessage(ref ProtocolMessage message)

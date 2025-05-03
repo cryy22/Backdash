@@ -106,6 +106,10 @@ sealed class RemoteSession<TInput> : INetcodeSession<TInput>
             Callbacks = callbacks,
         };
 
+        // TODO: the game is responsible for creating player objects and determining their "endpoints"
+        // will need to update player data to accept a ProductUserId, and also will need to provide
+        // that value in the SG2 code
+
         udp = services.ProtocolClientFactory.CreateClient(options.LocalPort, peerObservers);
 
         peerConnectionFactory = new(
@@ -299,6 +303,7 @@ sealed class RemoteSession<TInput> : INetcodeSession<TInput>
             return ResultCode.DuplicatedPlayer;
         }
 
+        // TODO: protocol state needs to have a ProductUserId so it can be used by the outbox
         var protocol = peerConnectionFactory.Create(
             new(player, player.EndPoint, localConnections, syncNumber),
             inputSerializer, peerInputEventQueue, inputComparer
