@@ -1,18 +1,21 @@
 using System.Net;
 using System.Net.Sockets;
 using Backdash.Network.Client;
+using Epic.OnlineServices.P2P;
 
 namespace Backdash.EOS;
 
 public class EosSpoofSocket : IPeerSocket
 {
+    SocketId socketId;
     public AddressFamily AddressFamily { get; }
     public int Port { get; }
 
-    public EosSpoofSocket(int port, bool useIPv6 = false)
+    public EosSpoofSocket(int port, SocketId socketId, bool useIPv6 = false)
     {
         Port = port;
         AddressFamily = useIPv6 ? AddressFamily.InterNetworkV6 : AddressFamily.InterNetwork;
+        this.socketId = socketId;
     }
 
     public ValueTask<int> ReceiveFromAsync(
