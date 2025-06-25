@@ -198,6 +198,7 @@ sealed class PeerClient<T> : INetcodeJob, IDisposable, IAsyncDisposable where T 
 
             try
             {
+                Console.WriteLine($"received bytes {receivedSize}");
                 serializer.Deserialize(buffer.AsSpan(..receivedSize), ref msg);
                 observer.OnPeerMessage(in msg, address, receivedSize);
             }
